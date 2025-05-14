@@ -8,11 +8,16 @@ app = Flask(__name__)
 model = joblib.load("expense_model.pkl")
 scaler = joblib.load("scaler.pkl")
 
+@app.route('/', methods=['GET'])
+def home():
+    return "Welcome to the Expense Predictor API. Use POST /predict to get predictions."
+
 @app.route('/predict', methods=['POST'])
 def predict():
     # Get input data from the request
     data = request.get_json()
     
+    # Extract values from request
     month = data['month']
     year = data['year']
     income = data['income']
